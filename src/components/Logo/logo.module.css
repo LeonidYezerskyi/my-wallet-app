@@ -1,0 +1,16 @@
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoText {
+  font-weight: 600;
+  font-size: 27px;
+  line-height: 0.5;
+}
+
+.logoImg {
+  width: 27px;
+  height: 27px;
+}

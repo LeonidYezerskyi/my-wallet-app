@@ -1,0 +1,56 @@
+.formWrapper {
+  padding-top: 150px;
+}
+
+.transferForm {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 42px 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0 auto;
+  max-width: 250px;
+}
+
+.transferInput {
+  width: 218px;
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.formBtn {
+  padding: 7px 15px;
+  width: 100%;
+}
+
+.formBtn:hover,
+.formBtn:focus {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid blue;
+}
+
+@media (max-width: 768px) {
+  .transferForm {
+    padding: 20px 20px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .transferForm {
+    padding: 10px 10px;
+    gap: 10px;
+  }
+
+  .transferInput {
+    width: 210px;
+  }
+
+  .formBtn {
+    width: 243px;
+  }
+}

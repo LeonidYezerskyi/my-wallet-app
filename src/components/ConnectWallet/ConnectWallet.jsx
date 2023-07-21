@@ -2,7 +2,9 @@ import css from "./connectWallet.module.css";
 
 const ConnectWallet = () => {
     return (
-        <div>ConnectWallet</div>
+        <div>
+            <button className={css.headerBtn} type="button">Connect wallet</button>
+        </div>
     )
 }
 

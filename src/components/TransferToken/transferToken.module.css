@@ -38,6 +38,10 @@
     padding: 20px 20px;
     gap: 10px;
   }
+
+  .formBtn {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -47,10 +51,11 @@
   }
 
   .transferInput {
-    width: 210px;
+    width: 207px;
   }
 
   .formBtn {
-    width: 243px;
+    width: 240px;
+    font-size: 15px;
   }
 }

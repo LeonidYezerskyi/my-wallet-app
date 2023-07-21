@@ -11,3 +11,23 @@
   align-items: center;
   gap: 30px;
 }
+
+@media (max-width: 860px) {
+  .headerWrapper {
+    justify-content: space-between;
+    align-items: first baseline;
+    justify-content: first baseline;
+  }
+
+  .infoWrapper {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerWrapper {
+    gap: 20px;
+  }
+}

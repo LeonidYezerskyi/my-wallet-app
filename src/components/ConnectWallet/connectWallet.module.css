@@ -3,3 +3,18 @@
   background-color: rgb(255, 255, 255);
   border: 1px solid blue;
 }
+
+@media (max-width: 768px) {
+  .headerBtn {
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerBtn {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 10px;
+  }
+}

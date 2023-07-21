@@ -9,3 +9,21 @@
   font-size: 15px;
   font-weight: 500;
 }
+
+@media (max-width: 768px) {
+  .walletText {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 480px) {
+  .walletInfo {
+    padding: 2px 5px;
+  }
+
+  .walletText {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}

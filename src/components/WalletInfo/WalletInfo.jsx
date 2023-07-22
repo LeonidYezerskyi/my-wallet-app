@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import css from "./walletInfo.module.css"
 
 const WalletInfo = ({ balance, address }) => {
@@ -7,6 +8,11 @@ const WalletInfo = ({ balance, address }) => {
             <p className={css.walletText}>Wallet address: {address}</p>
         </div>
     )
+}
+
+WalletInfo.propTypes = {
+    balance: PropTypes.number.isRequired,
+    address: PropTypes.string.isRequired,
 }
 
 export default WalletInfo

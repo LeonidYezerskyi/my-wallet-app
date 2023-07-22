@@ -4,6 +4,7 @@ import ConnectWallet from './components/ConnectWallet/ConnectWallet'
 import Logo from './components/Logo/Logo'
 import TransferToken from './components/TransferToken/TransferToken'
 import WalletInfo from './components/WalletInfo/WalletInfo'
+import Footer from './components/footer/Footer';
 
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
@@ -22,6 +23,7 @@ function App() {
         </div>
       </div>
       <TransferToken />
+      <Footer />
     </>
   )
 }

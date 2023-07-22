@@ -12,22 +12,24 @@
   gap: 30px;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 980px) {
   .headerWrapper {
+    flex-direction: column;
     justify-content: space-between;
-    align-items: first baseline;
-    justify-content: first baseline;
+    gap: 20px;
   }
 
   .infoWrapper {
     flex-direction: column;
-    align-items: flex-end;
     gap: 10px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .headerWrapper {
+    flex-direction: column;
     gap: 20px;
+    justify-content: center;
+    align-items: center;
   }
 }

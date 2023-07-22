@@ -11,7 +11,7 @@ const WalletInfo = ({ balance, address }) => {
 }
 
 WalletInfo.propTypes = {
-    balance: PropTypes.number.isRequired,
+    balance: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
 }
 

@@ -1,0 +1,12 @@
+.footerSection {
+  margin-top: 126px;
+}
+
+.footerLink {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.footerLink:hover {
+  color: blue;
+}

@@ -14,13 +14,12 @@
 
 @media (max-width: 980px) {
   .headerWrapper {
-    flex-direction: column;
     justify-content: space-between;
     gap: 20px;
   }
 
   .infoWrapper {
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
   }
 }

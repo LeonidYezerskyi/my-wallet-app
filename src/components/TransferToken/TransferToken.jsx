@@ -1,37 +1,66 @@
 import { useState } from 'react';
 import { ethers } from 'ethers';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import css from './transferToken.module.css';
 
-const TransferToken = () => {
+const TransferToken = ({ signer }) => {
     const [recipientAddress, setRecipientAddress] = useState('');
     const [amount, setAmount] = useState('');
 
     const handleTransfer = async (e) => {
         e.preventDefault();
+
         try {
-            if (!window.ethereum || !recipientAddress || !amount) {
-                alert('Please make sure you are connected to MetaMask and have entered both recipient address and amount.');
+            if (!signer || !recipientAddress || !amount) {
+                toast.error('Please make sure you are connected to MetaMask and have entered both recipient address and amount.', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+
                 return;
             }
 
-            const amountInWei = ethers.utils.parseUnits(amount, 'ether');
+            const amountInWei = ethers.parseEther(amount);
 
-            const tx = {
+            const tx = await signer.sendTransaction({
                 to: recipientAddress,
-                value: amountInWei.toHexString(),
-            };
-
-            const txHash = await window.ethereum.request({
-                method: 'eth_sendTransaction',
-                params: [tx],
+                value: amountInWei,
             });
 
-            alert(`Transaction sent! Transaction hash: ${txHash}`);
+            const receipt = await tx.wait();
+            console.log(receipt)
+            toast.success('Transaction sent successfully!', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+            resetForm()
         } catch (error) {
             console.error('Error transferring tokens:', error);
-            // alert('Error transferring tokens. Please try again later.');
+            toast.error('Error transferring tokens. Please try again later.', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
+    };
+
+    const resetForm = () => {
+        setRecipientAddress("");
+        setAmount("")
     };
 
     return (
@@ -56,5 +85,9 @@ const TransferToken = () => {
         </div>
     );
 };
+
+TransferToken.propTypes = {
+    signer: PropTypes.object,
+}
 
 export default TransferToken;

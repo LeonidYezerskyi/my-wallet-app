@@ -11,13 +11,13 @@
 }
 
 .walletText {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
 }
 
 @media (max-width: 768px) {
   .walletText {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
   }
 }
@@ -28,7 +28,7 @@
   }
 
   .walletText {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
   }
 }

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import css from './App.module.css'
 import ConnectWallet from './components/ConnectWallet/ConnectWallet'
 import Logo from './components/Logo/Logo'
@@ -9,6 +11,7 @@ import Footer from './components/footer/Footer';
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
   const [walletBalance, setWalletBalance] = useState('');
+  const [signer, setSigner] = useState(null);
 
   return (
     <>
@@ -19,11 +22,13 @@ function App() {
           <ConnectWallet
             setWalletAddress={setWalletAddress}
             setWalletBalance={setWalletBalance}
+            setSigner={setSigner}
           />
         </div>
       </div>
-      <TransferToken />
+      <TransferToken signer={signer} />
       <Footer />
+      <ToastContainer />
     </>
   )
 }

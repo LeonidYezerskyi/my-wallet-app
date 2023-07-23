@@ -3,29 +3,23 @@ import { ethers } from 'ethers';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import css from './transferToken.module.css';
+import Loader from '../Loader/Loader';
 
 const TransferToken = ({ signer }) => {
     const [recipientAddress, setRecipientAddress] = useState('');
     const [amount, setAmount] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleTransfer = async (e) => {
         e.preventDefault();
 
         try {
             if (!signer || !recipientAddress || !amount) {
-                toast.error('Please make sure you are connected to MetaMask and have entered both recipient address and amount.', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
-
+                showErrorMessage('Please make sure you are connected to MetaMask and have entered both recipient address and amount.');
                 return;
             }
+            setIsLoading(true);
 
             const amountInWei = ethers.parseEther(amount);
 
@@ -36,27 +30,38 @@ const TransferToken = ({ signer }) => {
 
             const receipt = await tx.wait();
             console.log(receipt)
-            toast.success('Transaction sent successfully!', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            showSuccessMessage('Transaction sent successfully!');
             resetForm()
         } catch (error) {
             console.error('Error transferring tokens:', error);
-            toast.error('Error transferring tokens. Please try again later.', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            showErrorMessage('Error transferring tokens. Please try again later.');
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    const showErrorMessage = (message) => {
+        toast.error(message, {
+            position: "top-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
+    const showSuccessMessage = (message) => {
+        toast.success(message, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
 
     const resetForm = () => {
         setRecipientAddress("");
@@ -80,7 +85,13 @@ const TransferToken = ({ signer }) => {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                 />
-                <button className={css.formBtn} onClick={handleTransfer} type='submit'>Transfer</button>
+                <button
+                    className={css.formBtn}
+                    disabled={isLoading}
+                    onClick={handleTransfer}
+                    type='submit'>
+                    Transfer {isLoading && <Loader />}
+                </button>
             </div>
         </div>
     );

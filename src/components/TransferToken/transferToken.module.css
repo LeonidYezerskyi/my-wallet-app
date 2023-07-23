@@ -23,6 +23,7 @@
 }
 
 .formBtn {
+  position: relative;
   padding: 7px 15px;
   width: 100%;
 }

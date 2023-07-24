@@ -12,11 +12,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
   background-color: #e5e5e5;
-  margin: 40px;
-
-  @media screen and (max-width: 480px) {
-    margin: 10px;
-  }
 }
 
 img {
@@ -36,8 +31,7 @@ button {
   outline: none;
 }
 
-input,
-textarea {
+input {
   outline: none;
   margin: 0;
   border: 0;

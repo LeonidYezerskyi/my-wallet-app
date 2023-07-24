@@ -15,13 +15,10 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
         try {
             if (window.ethereum !== "undefined" && window.ethereum.isMetaMask) {
 
-                const [address] = await window.ethereum.request(
-                    { method: 'eth_requestAccounts' });
-
                 provider = new ethers.BrowserProvider(window.ethereum);
 
                 signer = await provider.getSigner();
-                // const address = await signer.getAddress();
+                const address = await signer.getAddress();
 
                 getBalance(address, provider)
 
@@ -82,17 +79,9 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
         });
     };
 
-    const disconnectWallet = () => {
-        setWalletAddress('');
-        setWalletBalance('');
-        setConnected(false);
-    };
-
     return (
         <div>
-            {connected ? (
-                <button className={css.headerBtn} type="button" onClick={disconnectWallet}>Disconnect wallet</button>
-            ) : (
+            {connected ? "" : (
                 <button className={css.headerBtn} type="button" onClick={connectWallet}>Connect wallet</button>
             )}
         </div>

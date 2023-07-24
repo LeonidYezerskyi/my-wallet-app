@@ -18,14 +18,16 @@ function App() {
     <>
       <div className={css.headerWrapper}>
         <Logo />
-        <div className={css.infoWrapper}>
-          {walletAddress !== "" ? <WalletInfo balance={walletBalance} address={walletAddress} /> : ""}
-          <ConnectWallet
-            setWalletAddress={setWalletAddress}
-            setWalletBalance={setWalletBalance}
-            setWalletBalanceInEther={setWalletBalanceInEther}
-            setSigner={setSigner}
-          />
+        <div>
+          {walletAddress !== "" ?
+            (<WalletInfo balance={walletBalance} address={walletAddress} />) :
+            (<ConnectWallet
+              setWalletAddress={setWalletAddress}
+              setWalletBalance={setWalletBalance}
+              setWalletBalanceInEther={setWalletBalanceInEther}
+              setSigner={setSigner}
+            />)}
+
         </div>
       </div>
       <TransferToken signer={signer} balanceInEther={balanceInEther} />

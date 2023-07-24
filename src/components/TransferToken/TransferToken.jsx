@@ -119,7 +119,7 @@ const TransferToken = ({ signer, balanceInEther }) => {
                     onChange={(e) => setAmount(e.target.value)}
                     min="0.000001"
                     max="100000"
-                    step="any"
+                    step="0.000001"
                 />
                 <button className={css.formBtn} disabled={isLoading} onClick={handleTransfer} type="submit">
                     Transfer {isLoading && <Loader />}

@@ -37,6 +37,12 @@ const TransferToken = ({ signer, balanceInEther }) => {
                 return;
             }
 
+            if (amount > 1 && amount % 10 !== 0) {
+                showErrorMessage('Please enter an amount that is a multiple of 10');
+                setIsLoading(false);
+                return;
+            }
+
             if (amount > balanceInEther) {
                 showErrorMessage('Not enough funds.');
                 setIsLoading(false);
@@ -71,7 +77,7 @@ const TransferToken = ({ signer, balanceInEther }) => {
     const showErrorMessage = (message) => {
         toast.error(message, {
             position: 'top-center',
-            autoClose: 4000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,

@@ -14,9 +14,14 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
 
         try {
             if (window.ethereum !== "undefined" && window.ethereum.isMetaMask) {
-                provider = new ethers.BrowserProvider(window.ethereum)
+
+                const [address] = await window.ethereum.request(
+                    { method: 'eth_requestAccounts' });
+
+                provider = new ethers.BrowserProvider(window.ethereum);
+
                 signer = await provider.getSigner();
-                const address = await signer.getAddress();
+                // const address = await signer.getAddress();
 
                 getBalance(address, provider)
 
@@ -58,7 +63,7 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
     const showErrorMessage = (message) => {
         toast.error(message, {
             position: "top-center",
-            autoClose: 4000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,

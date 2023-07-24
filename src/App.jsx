@@ -11,6 +11,7 @@ import Footer from './components/footer/Footer';
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
   const [walletBalance, setWalletBalance] = useState('');
+  const [balanceInEther, setWalletBalanceInEther] = useState('');
   const [signer, setSigner] = useState(null);
 
   return (
@@ -22,11 +23,12 @@ function App() {
           <ConnectWallet
             setWalletAddress={setWalletAddress}
             setWalletBalance={setWalletBalance}
+            setWalletBalanceInEther={setWalletBalanceInEther}
             setSigner={setSigner}
           />
         </div>
       </div>
-      <TransferToken signer={signer} />
+      <TransferToken signer={signer} balanceInEther={balanceInEther} />
       <Footer />
       <ToastContainer />
     </>

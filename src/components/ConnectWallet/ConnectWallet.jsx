@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import css from "./connectWallet.module.css";
 
-const ConnectWallet = ({ setWalletAddress, setWalletBalance, setSigner }) => {
+const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInEther, setSigner }) => {
     const [connected, setConnected] = useState(false);
 
     const connectWallet = async () => {
@@ -13,67 +13,39 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setSigner }) => {
         let provider;
 
         try {
-            if (window.ethereum === "undefined") {
-                toast.error('MetaMask extension not found. Please install the MetaMask extension on your browser or download the app on your mobile device.', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+            if (window.ethereum !== "undefined" && window.ethereum.isMetaMask) {
+                provider = new ethers.BrowserProvider(window.ethereum)
+                signer = await provider.getSigner();
+                const address = await signer.getAddress();
+
+                getBalance(address, provider)
+
+                const formattedAddress = formatAddress(address);
+                setWalletAddress(formattedAddress);
+                setSigner(signer)
+                setConnected(true);
+                showSuccessMessage('You are connected!');
+            } else {
+                showErrorMessage('MetaMask extension not found. Please install the MetaMask extension on your browser or download the app on your mobile device.');
                 return;
             }
-
-            provider = new ethers.BrowserProvider(window.ethereum)
-            signer = await provider.getSigner();
-            const address = await signer.getAddress();
-
-            getBalance(address, provider)
-
-            const formattedAddress = formatAddress(address);
-            setWalletAddress(formattedAddress);
-            setSigner(signer)
-            setConnected(true);
-            toast.success('You are connected!', {
-                position: "top-center",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
         } catch (error) {
             console.error('Error connecting wallet:', error);
-            toast.error('Error connecting wallet. Please make sure you have MetaMask installed or try again later.', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            showErrorMessage('Error connecting wallet. Please make sure you have MetaMask installed or try again later.');
         }
     };
 
-    const getBalance = async (address, provider) => {
+    const getBalance = async (address, signer) => {
         try {
-            const balance = await provider.getBalance(address)
+            const balance = await signer.getBalance(address)
             const balanceInEther = ethers.formatEther(balance)
             const formattedBalance = parseFloat(balanceInEther).toFixed(3);
 
             setWalletBalance(formattedBalance);
-
+            setWalletBalanceInEther(balanceInEther)
         } catch (balanceError) {
             console.error('Error getting balance:', balanceError);
-            toast.error('Error getting balance. Please try again later.', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            showErrorMessage('Error getting balance. Please try again later.');
         }
     }
 
@@ -82,6 +54,28 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setSigner }) => {
         const lastFour = address.slice(-4);
         return `${firstFive}...${lastFour}`;
     }
+
+    const showErrorMessage = (message) => {
+        toast.error(message, {
+            position: "top-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
+    const showSuccessMessage = (message) => {
+        toast.success(message, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
 
     const disconnectWallet = () => {
         setWalletAddress('');
@@ -103,6 +97,7 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setSigner }) => {
 ConnectWallet.propTypes = {
     setWalletAddress: PropTypes.func.isRequired,
     setWalletBalance: PropTypes.func.isRequired,
+    setWalletBalanceInEther: PropTypes.func.isRequired,
     setSigner: PropTypes.func.isRequired,
 };
 

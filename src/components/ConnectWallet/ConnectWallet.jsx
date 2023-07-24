@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ethers } from 'ethers';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
@@ -6,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import css from "./connectWallet.module.css";
 
 const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInEther, setSigner }) => {
-    const [connected, setConnected] = useState(false);
 
     const connectWallet = async () => {
         let signer = null;
@@ -25,7 +23,7 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
                 const formattedAddress = formatAddress(address);
                 setWalletAddress(formattedAddress);
                 setSigner(signer)
-                setConnected(true);
+
                 showSuccessMessage('You are connected!');
             } else {
                 showErrorMessage('MetaMask extension not found. Please install the MetaMask extension on your browser or download the app on your mobile device.');
@@ -37,16 +35,16 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
         }
     };
 
-    const getBalance = async (address, signer) => {
+    const getBalance = async (address, provider) => {
         try {
-            const balance = await signer.getBalance(address)
+            const balance = await provider.getBalance(address)
             const balanceInEther = ethers.formatEther(balance)
             const formattedBalance = parseFloat(balanceInEther).toFixed(3);
 
             setWalletBalance(formattedBalance);
             setWalletBalanceInEther(balanceInEther)
-        } catch (balanceError) {
-            console.error('Error getting balance:', balanceError);
+        } catch (error) {
+            console.error('Error getting balance:', error);
             showErrorMessage('Error getting balance. Please try again later.');
         }
     }
@@ -81,9 +79,7 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
 
     return (
         <div>
-            {connected ? "" : (
-                <button className={css.headerBtn} type="button" onClick={connectWallet}>Connect wallet</button>
-            )}
+            <button className={css.headerBtn} type="button" onClick={connectWallet}>Connect wallet</button>
         </div>
     )
 }

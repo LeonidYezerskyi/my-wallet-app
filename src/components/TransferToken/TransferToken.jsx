@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { ethers } from 'ethers';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
-import css from './transferToken.module.css';
 import Loader from '../Loader/Loader';
+import css from './transferToken.module.css';
 
 const TransferToken = ({ signer, balanceInEther }) => {
     const [recipientAddress, setRecipientAddress] = useState('');
@@ -25,7 +24,7 @@ const TransferToken = ({ signer, balanceInEther }) => {
         try {
             if (!signer || !recipientAddress || !amount) {
                 showErrorMessage(
-                    'Please make sure you are connected to MetaMask and have entered both recipient address and amount.'
+                    'Please make sure you are connected to MetaMask and have entered both recipient address and amount'
                 );
                 return;
             }
@@ -44,13 +43,13 @@ const TransferToken = ({ signer, balanceInEther }) => {
             }
 
             if (amount > balanceInEther) {
-                showErrorMessage('Not enough funds.');
+                showErrorMessage('Not enough funds');
                 setIsLoading(false);
                 return;
             }
 
             if (!isValidAddress(recipientAddress)) {
-                showErrorMessage('Please enter a valid Ethereum wallet address.');
+                showErrorMessage('Please enter a valid Ethereum wallet address');
                 setIsLoading(false);
                 return;
             }
@@ -68,7 +67,7 @@ const TransferToken = ({ signer, balanceInEther }) => {
             resetForm();
         } catch (error) {
             console.error('Error transferring tokens:', error);
-            showErrorMessage('Error transferring tokens. Please try again later.');
+            showErrorMessage('Error transferring tokens. Please try again later');
         } finally {
             setIsLoading(false);
         }

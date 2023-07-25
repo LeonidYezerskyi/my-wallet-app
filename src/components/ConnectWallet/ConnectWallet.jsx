@@ -12,10 +12,10 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
 
         try {
             if (window.ethereum !== "undefined" && window.ethereum.isMetaMask) {
-
+                openMetaMaskApp()
                 provider = new ethers.BrowserProvider(window.ethereum);
-
                 signer = await provider.getSigner();
+
                 const address = await signer.getAddress();
 
                 getBalance(address, provider)
@@ -25,6 +25,9 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
                 setSigner(signer)
 
                 showSuccessMessage('You are connected!');
+            } else if (window.innerWidth >= 320 && window.innerWidth <= 480 && !window.ethereum) {
+                showErrorMessage('MetaMask app not found. Please download the app on your mobile device and use MetaMask mobile browser');
+                return;
             } else {
                 showErrorMessage('MetaMask extension not found. Please install the MetaMask extension on your browser or download the app on your mobile device.');
                 return;
@@ -32,6 +35,12 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
         } catch (error) {
             console.error('Error connecting wallet:', error);
             showErrorMessage('Error connecting wallet. Please make sure you have MetaMask installed or try again later.');
+        }
+    };
+
+    const openMetaMaskApp = () => {
+        if (window.ethereum && window.innerWidth >= 320 && window.innerWidth <= 480) {
+            window.ethereum.send('wallet:connect');
         }
     };
 

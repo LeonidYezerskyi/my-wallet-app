@@ -34,7 +34,6 @@
   background-color: rgb(255, 255, 255);
   border: 1px solid blue;
 }
-
 @media screen and (min-width: 480px) {
   .transferForm {
     padding: 20px 20px;
@@ -58,6 +57,7 @@
   }
 
   .transferForm {
+    width: 441px;
     padding: 42px 42px;
     gap: 15px;
   }

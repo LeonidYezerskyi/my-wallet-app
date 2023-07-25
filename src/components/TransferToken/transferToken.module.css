@@ -37,11 +37,11 @@
 @media screen and (min-width: 480px) {
   .transferForm {
     padding: 20px 20px;
-    max-width: 355px;
+    max-width: 441px;
   }
 
   .transferInput {
-    width: 325px;
+    width: 409px;
   }
 
   .formBtn {
@@ -57,8 +57,12 @@
   }
 
   .transferForm {
-    width: 441px;
+    max-width: 527px;
     padding: 42px 42px;
     gap: 15px;
+  }
+
+  .transferInput {
+    width: 493px;
   }
 }

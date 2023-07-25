@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TransferToken from './components/TransferToken/TransferToken'
-import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [balanceInEther, setWalletBalanceInEther] = useState('');

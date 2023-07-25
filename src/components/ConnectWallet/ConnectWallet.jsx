@@ -38,12 +38,6 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
         }
     };
 
-    const openMetaMaskApp = () => {
-        if (window.ethereum && window.innerWidth >= 320 && window.innerWidth <= 480) {
-            window.ethereum.send('wallet:connect');
-        }
-    };
-
     const getBalance = async (address, provider) => {
         try {
             const balance = await provider.getBalance(address)

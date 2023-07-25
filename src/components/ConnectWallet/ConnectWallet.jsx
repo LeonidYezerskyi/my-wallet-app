@@ -12,7 +12,7 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
 
         try {
             if (window.ethereum && window.ethereum.isMetaMask) {
-                openMetaMaskApp();
+                openMetaMaskApp()
                 provider = new ethers.BrowserProvider(window.ethereum);
                 signer = await provider.getSigner();
 
@@ -38,17 +38,11 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
         }
     };
 
-    const openMetaMaskApp = async () => {
-        try {
-            if (window.ethereum && window.innerWidth >= 320 && window.innerWidth <= 480) {
-                await window.ethereum.request({ method: 'eth_requestAccounts' });
-            }
-        } catch (error) {
-            console.error('Error connecting wallet:', error);
-            showErrorMessage('Error connecting wallet. Please make sure you have MetaMask app or try again later.');
+    const openMetaMaskApp = () => {
+        if (window.ethereum && window.innerWidth >= 320 && window.innerWidth <= 480) {
+            window.ethereum.send('wallet:connect');
         }
     };
-
 
     const getBalance = async (address, provider) => {
         try {
@@ -63,6 +57,12 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
             showErrorMessage('Error getting balance. Please try again later.');
         }
     }
+
+    const openMetaMaskApp = () => {
+        if (window.ethereum && window.innerWidth >= 320 && window.innerWidth <= 480) {
+            window.ethereum.send('wallet:connect');
+        }
+    };
 
     const formatAddress = (address) => {
         const firstFive = address.slice(0, 5);

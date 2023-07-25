@@ -1,8 +1,7 @@
-# React + Vite
+# My-wallet-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+https://my-crypto-wallet-app.netlify.app/
 
-Currently, two official plugins are available:
+This project is a simple web application that allows the user to connect his crypto wallet, check his account balance and wallet address, and perform a token transfer from the connected wallet to another address on the Ethereum Goerli network.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The project is built using HTML, CSS, JavaScript, React, ethers, prop-types, react-router-dom, react-toastify, gitHub, and vite.js.

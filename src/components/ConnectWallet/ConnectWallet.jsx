@@ -6,13 +6,13 @@ import css from "./connectWallet.module.css";
 
 const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInEther, setSigner }) => {
 
-    const connectWallet = async () => {
+    const connectYourWallet = async () => {
         let signer = null;
         let provider;
 
         try {
-            if (window.ethereum !== "undefined" && window.ethereum.isMetaMask) {
-                openMetaMaskApp()
+            if (window.ethereum && window.ethereum.isMetaMask) {
+                openMetaMaskApp();
                 provider = new ethers.BrowserProvider(window.ethereum);
                 signer = await provider.getSigner();
 
@@ -29,7 +29,7 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
                 showErrorMessage('MetaMask app not found. Please download the app on your mobile device and use MetaMask mobile browser');
                 return;
             } else {
-                showErrorMessage('MetaMask extension not found. Please install the MetaMask extension on your browser or download the app on your mobile device.');
+                showErrorMessage('MetaMask extension not found. Please install the MetaMask extension on your browser');
                 return;
             }
         } catch (error) {
@@ -38,11 +38,17 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
         }
     };
 
-    const openMetaMaskApp = () => {
-        if (window.ethereum && window.innerWidth >= 320 && window.innerWidth <= 480) {
-            window.ethereum.send('wallet:connect');
+    const openMetaMaskApp = async () => {
+        try {
+            if (window.ethereum && window.innerWidth >= 320 && window.innerWidth <= 480) {
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+            }
+        } catch (error) {
+            console.error('Error connecting wallet:', error);
+            showErrorMessage('Error connecting wallet. Please make sure you have MetaMask app or try again later.');
         }
     };
+
 
     const getBalance = async (address, provider) => {
         try {
@@ -88,7 +94,7 @@ const ConnectWallet = ({ setWalletAddress, setWalletBalance, setWalletBalanceInE
 
     return (
         <div>
-            <button className={css.headerBtn} type="button" onClick={connectWallet}>Connect wallet</button>
+            <button className={css.headerBtn} type="button" onClick={connectYourWallet}>Connect wallet</button>
         </div>
     )
 }
